@@ -1,5 +1,5 @@
 use rand;
-use std::{convert::TryInto, thread, time};
+use std::{convert::TryInto, thread::{self, current}, time};
 
 const ALIVE: char = '🟡'; // ⚪
 const DEAD: char = '⚫';
@@ -26,16 +26,34 @@ fn main() {
 
     let mut grid = init_grid(10, 0.1);
     println!("grid: {:?}", grid);
+
+    println!("{},{},{}", 0, 4, grid[0][4]);
+    println!("{},{},{}", 0, 5, grid[0][5]);
+    println!("{},{},{}\n\n", 0, 6, grid[0][6]);
     display_grid(&grid);
 
 
-    // println!("grid[0][0]: {} => {}", grid[0][0], next_state(1, 1, &grid));
-    // println!("grid[9][5]: {} => {}", grid[9][5], next_state(1, 1, &grid));
-    // println!("grid[1][1]: {} => {}", grid[1][1], next_state(1, 1, &grid));
+
+    println!("grid[0][0]: {}", grid[0][0]);
+    println!("grid[0][1]: {}", grid[0][1]);
+    println!("grid[0][2]: {}", grid[0][2]);
+    println!("grid[0][3]: {}", grid[0][3]);
+    println!("grid[0][4]: {}", grid[0][4]);
+    println!("grid[0][5]: {}", grid[0][5]);
+    println!("grid[0][6]: {}", grid[0][6]);
+    println!("grid[0][7]: {}", grid[0][7]);
+    println!("grid[0][8]: {}", grid[0][8]);
+    println!("grid[0][9]: {}", grid[0][9]);
+
+    println!("grid[0][0]: {} => {}", grid[0][0], next_state(0, 0, &grid));
+    println!("grid[9][5]: {} => {}", grid[9][5], next_state(9, 5, &grid));
+    println!("grid[1][1]: {} => {}", grid[1][1], next_state(1, 1, &grid));
     // println!("grid[1][2]: {} => {}", grid[1][2], next_state(1, 2, &grid));
     // println!("grid[1][3]: {} => {}", grid[1][3], next_state(1, 3, &grid));
-    println!("modulo(-1, 10) => {}", modulo(-1, 10));
+    // println!("modulo(-1, 10) => {}", modulo(-1, 10));
     // println!("grid[-1][0] => ", grid[-1][0]);
+
+    // println!("{}", modulo(0,10));
 }
 
 fn init_grid(size: i32, prob: f32) -> Vec<Vec<bool>> {
@@ -56,9 +74,9 @@ fn init_grid(size: i32, prob: f32) -> Vec<Vec<bool>> {
 }
 
 fn display_grid(grid: &Vec<Vec<bool>>) {
-    for col in 0..grid.len() {
-        for row in 0..grid.len() {
-            if grid[row][col] {
+    for row in 0..grid.len() {
+        for col in 0..grid.len() {
+            if grid[col][row] {
                 print!("{}", ALIVE);
             } else {
                 print!("{}", DEAD);
@@ -69,49 +87,82 @@ fn display_grid(grid: &Vec<Vec<bool>>) {
 }
 
 fn next_generation(grid: &mut Vec<Vec<bool>>) {
+    let new_grid = grid.clone();
 
 }
 
-fn next_state(row: i32, col: i32, grid: &Vec<Vec<bool>>) -> usize {
+fn next_state(col: i32, row: i32, grid: &Vec<Vec<bool>>) -> bool {
     let grid_size: i32 = grid.len().try_into().unwrap();
-    // let current_state = grid[row][col];
-    let mut neighbors: Vec<bool> = vec![];
-    let row = modulo(row - 1, grid_size);
-    let col = modulo(col, grid_size);
-    println!("{},{},{}",row, col, grid[row  as usize][col  as usize]);
+    let current_state = grid[col as usize][row as usize];
+    // let mut neighbors: Vec<bool> = vec![];
+    let mut alive_count: usize = 0;
 
-    let row = modulo(row - 1, grid_size);
-    let col = modulo(col + 1, grid_size);
-    println!("{},{},{}",row, col, grid[row  as usize][col  as usize]);
+    let c = modulo(col - 1, grid_size);
+    let r = modulo(row - 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row, grid_size);
-    let col = modulo(col + 1, grid_size);
-    println!("{},{},{}",row, col, grid[row  as usize][col as usize]);
+    let c = modulo(col, grid_size);
+    let r = modulo(row - 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row, grid_size);
-    let col = modulo(col - 1, grid_size);
-    println!("{},{},{}",row, col, grid[row as usize][col as usize]);
+    let c = modulo(col + 1, grid_size);
+    let r = modulo(row - 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row + 1, grid_size);
-    let col = modulo(col - 1, grid_size);
-    println!("{},{},{}",row, col, grid[row as usize][col as usize]);
+    let c = modulo(col - 1, grid_size);
+    let r = modulo(row, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row + 1, grid_size);
-    let col = modulo(col + 1, grid_size);
-    println!("{},{},{}",row, col, grid[row as usize][col as usize]);
+    let c = modulo(col + 1, grid_size);
+    let r = modulo(row, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row + 1, grid_size);
-    let col = modulo(col, grid_size);
-    println!("{},{},{}",row, col, grid[row as usize][col as usize]);
+    let c = modulo(col - 1, grid_size);
+    let r = modulo(row + 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let row = modulo(row - 1, grid_size);
-    let col = modulo(col - 1, grid_size);
-    println!("{},{},{}",row, col, grid[row as usize][col as usize]);
+    let c = modulo(col, grid_size);
+    let r = modulo(row + 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
 
-    let alive_count: usize = neighbors.iter().filter(|&n| *n == true).count();
-    alive_count
+    let c = modulo(col + 1, grid_size);
+    let r = modulo(row + 1, grid_size);
+    println!("{},{},{}", c, r, grid[c as usize][r as usize]);
+    if grid[c  as usize][r  as usize] {
+        alive_count += 1;
+    }
+
+    // let alive_count: usize = neighbors.iter().filter(|&n| *n == true).count();
+    if current_state == true && (alive_count == 2 || alive_count == 3) {
+        true
+    } else if current_state == false && alive_count == 3 {
+        true
+    } else {
+        false
+    }
 }
 
 fn modulo(a: i32, b: i32) -> i32 {
-    (((a % b) + b) % b)
+    ((a % b) + b) % b
 }
