@@ -6,7 +6,13 @@
 ![GOL](https://user-images.githubusercontent.com/44790691/129497550-5493e665-dde5-4542-b2f7-1b113474bc79.gif)
 
 
+# ToDo's (improvements)
+- [ ] drop matrix, index grid as single vector
+- [ ] make `Grid` and `Cell` structs that are linked. So you only store references to the values. Each Cell should have `current_value` (bool), `next_value` (i8), neighbors (references of other cells? => i dont think that will work though, because you cannot mutate a Cell if you have read only references, but not 100% sure) 
+- [ ] transform to library crate
+
 # Grid Indexing (not implemented yet)
+currently the grid is implemented as `Vec<Vec<bool>>`
 ```
  0  1  2  3  4  5  6  7  8  9
 10 11 12 13 14 15 16 17 18 19
