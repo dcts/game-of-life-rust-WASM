@@ -3,6 +3,9 @@
 - compiled to WASM
 - current state: game is displayed in the Terminal as unicode chars
 
+![GOL](https://user-images.githubusercontent.com/44790691/129497550-5493e665-dde5-4542-b2f7-1b113474bc79.gif)
+
+
 # Grid Indexing (not implemented yet)
 ```
  0  1  2  3  4  5  6  7  8  9
