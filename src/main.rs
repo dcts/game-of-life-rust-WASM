@@ -1,7 +1,7 @@
 use rand;
-use std::{convert::TryInto, thread::{self, current}, time};
+use std::{convert::TryInto, thread::{self}, time};
 
-const ALIVE: char = '🟡'; // ⚪
+const ALIVE: char = '🟡';
 const DEAD: char = '⚫';
 
 // 0,1 seconds wait time between iterations
@@ -14,53 +14,15 @@ pub fn sleep() {
 
 
 fn main() {
-    // println!("Hello, world!");
-    // let random_bool: bool = rand::random();
-    // println!("random bool: {}", random_bool);
-    // let random_bool: bool = rand::random();
-    // println!("random bool: {}", random_bool);
-    // let random_bool: bool = rand::random();
-    // println!("random bool: {}", random_bool);
-    // let random_bool: bool = rand::random();
-    // println!("random bool: {}", random_bool);
-
-    let mut grid = init_grid(20, 0.1);
+    let mut grid = init_grid(20);
     loop {
         display_grid(&grid);
         next_generation(&mut grid);
         sleep();
     }
-
-    // println!("{},{},{}", 0, 4, grid[0][4]);
-    // println!("{},{},{}", 0, 5, grid[0][5]);
-    // println!("{},{},{}\n\n", 0, 6, grid[0][6]);
-    // display_grid(&grid);
-
-
-
-    // println!("grid[0][0]: {}", grid[0][0]);
-    // println!("grid[0][1]: {}", grid[0][1]);
-    // println!("grid[0][2]: {}", grid[0][2]);
-    // println!("grid[0][3]: {}", grid[0][3]);
-    // println!("grid[0][4]: {}", grid[0][4]);
-    // println!("grid[0][5]: {}", grid[0][5]);
-    // println!("grid[0][6]: {}", grid[0][6]);
-    // println!("grid[0][7]: {}", grid[0][7]);
-    // println!("grid[0][8]: {}", grid[0][8]);
-    // println!("grid[0][9]: {}", grid[0][9]);
-
-    // println!("grid[0][0]: {} => {}", grid[0][0], next_state(0, 0, &grid));
-    // println!("grid[9][5]: {} => {}", grid[9][5], next_state(9, 5, &grid));
-    // println!("grid[1][1]: {} => {}", grid[1][1], next_state(1, 1, &grid));
-    // println!("grid[1][2]: {} => {}", grid[1][2], next_state(1, 2, &grid));
-    // println!("grid[1][3]: {} => {}", grid[1][3], next_state(1, 3, &grid));
-    // println!("modulo(-1, 10) => {}", modulo(-1, 10));
-    // println!("grid[-1][0] => ", grid[-1][0]);
-
-    // println!("{}", modulo(0,10));
 }
 
-fn init_grid(size: i32, prob: f32) -> Vec<Vec<bool>> {
+fn init_grid(size: i32) -> Vec<Vec<bool>> {
     let mut grid = vec![];
     for _ in 0..size {
         let mut row_vec: Vec<bool> = vec![];
