@@ -25,3 +25,7 @@ currently the grid is implemented as `Vec<Vec<bool>>`
 80 81 82 83 84 85 86 87 88 89
 90 91 92 93 94 95 96 97 98 99
 ```
+
+# Optimization of GOL Algorithm
+- [Hashlife (predict future states)](https://jennyhasahat.github.io/hashlife.html)
+- [Optimizing Game Of Life by Teds Lab](https://medium.com/tebs-lab/optimizing-conways-game-of-life-12f1b7f2f54c)
